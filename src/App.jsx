@@ -1,11 +1,12 @@
 import Header from './Components/Header'
 import Footer from './Components/Footer'
+import Banner from './Components/Banner'
 
-function App() {
+const App = () => {
   return (
     <div>
       <Header />
-      <p>Hello world</p>
+      <Banner />
       <Footer />
     </div>
   )
