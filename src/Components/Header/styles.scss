@@ -1,0 +1,20 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 20px;
+
+  &__logo-image {
+    width: 200px;
+  }
+
+  &__list-item {
+  }
+
+  &__item {
+    font-weight: bold;
+    color: #2c3e50;
+    text-decoration: none;
+    margin: 0.5rem;
+  }
+}
