@@ -1,10 +1,10 @@
-
+//npm import
 
 // import component
 import Header from '../../Components/Header';
 import Footer from '../../Components/Footer';
 import Banner from '../../Components/Banner';
-import featureCard from '../../Components/FeatureCard';
+import FeatureCard from '../../Components/FeatureCard';
 
 // import style
 import './styles.scss';
@@ -18,10 +18,10 @@ const HomePage = () => {
             <Header />
             <Banner />
             <div className="feature-container">
-                {data.map((item) => {
+                {data.map((item, index) => {
                     return (
-                        <featureCard
-                            key={item.id}
+                        <FeatureCard
+                            key={index}
                             icon={item.icon}
                             title={item.title}
                             description={item.description}
