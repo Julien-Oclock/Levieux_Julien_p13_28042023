@@ -1,5 +1,5 @@
 
-const featureCard = (props) => {
+const FeatureCard = (props) => {
     return (
         <div className="feature">
         <img src={props.icon} className="feature__icon" />
@@ -9,5 +9,5 @@ const featureCard = (props) => {
     );
 };
 
-export default featureCard;
+export default FeatureCard;
 

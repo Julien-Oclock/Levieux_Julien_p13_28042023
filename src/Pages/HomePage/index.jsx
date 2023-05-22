@@ -1,10 +1,9 @@
 
-
 // import component
 import Header from '../../Components/Header';
 import Footer from '../../Components/Footer';
 import Banner from '../../Components/Banner';
-import featureCard from '../../Components/FeatureCard';
+import FeatureCard from '../../Components/FeatureCard';
 
 // import style
 import './styles.scss';
@@ -20,10 +19,11 @@ const HomePage = () => {
             <div className="feature-container">
                 {data.map((item) => {
                     return (
-                        <featureCard
+                        <FeatureCard
                             key={item.id}
                             icon={item.icon}
                             title={item.title}
+                            // eslint-disable-next-line react/no-unknown-property
                             description={item.description}
                         />
                     );
