@@ -1,5 +1,6 @@
+import './styles.scss'
 
-const featureCard = (props) => {
+const FeatureCard = ({icon, title, description}) => {
     return (
         <div className="feature">
         <img src={icon} className="feature__icon" />

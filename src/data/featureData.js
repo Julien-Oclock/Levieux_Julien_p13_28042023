@@ -1,9 +1,3 @@
-const chatIcon = 'src/assets/img/icon-chat.png';
-const moneyIcon = 'src/assets/img/icon-money.png';
-const securityIcon = 'src/assets/img/icon-security.png';
-
-
-const featureData = [
 const moneyIcon = 'src/assets/img/icon-money.png';
 const securityIcon = 'src/assets/img/icon-security.png';
 const chatIcon = 'src/assets/img/icon-chat.png';
