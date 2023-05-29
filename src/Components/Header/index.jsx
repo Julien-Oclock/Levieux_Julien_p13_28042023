@@ -9,13 +9,13 @@ import './styles.scss'
 const Header = () => {
   return(
     <nav className="nav">
-    <a className="nav__logo-link" href="./index.html">
+    <Link className="nav__logo-link" to="/">
       <img
         className="nav__logo-image"
         src={logo}
         alt="Argent Bank Logo"
       />
-    </a>
+    </Link>
     <div className='nav__list-item'>
       <i className="fa-solid fa-circle-user"></i>
       <Link className="nav__item" to="/sign-in">

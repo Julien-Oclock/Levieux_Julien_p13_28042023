@@ -10,7 +10,7 @@ import FeatureCard from '../../Components/FeatureCard';
 import './styles.scss';
 
 // feature data
-import data from '../../data/featureData';
+import data from '../../App/data/featureData';
 
 const HomePage = () => {
     return (
@@ -24,7 +24,6 @@ const HomePage = () => {
                             key={index}
                             icon={item.icon}
                             title={item.title}
-                            // eslint-disable-next-line react/no-unknown-property
                             description={item.description}
                         />
                     );
