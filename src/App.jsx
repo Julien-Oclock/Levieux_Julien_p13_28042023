@@ -1,9 +1,13 @@
-import HomePage from "./Pages/HomePage"
+import Header from './Components/Header'
+import Footer from './Components/Footer'
+import Banner from './Components/Banner'
 
 const App = () => {
   return (
     <div>
-    <HomePage />
+      <Header />
+      <Banner />
+      <Footer />
     </div>
   )
 }

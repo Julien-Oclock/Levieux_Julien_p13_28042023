@@ -1,8 +1,5 @@
 
-// imoport scss
-import './styles.scss';
-
-const featureCard = ({icon, title, description}) => {
+const featureCard = (props) => {
     return (
         <div className="feature">
         <img src={icon} className="feature__icon" />
@@ -12,5 +9,5 @@ const featureCard = ({icon, title, description}) => {
     );
 };
 
-export default featureCard;
+export default FeatureCard;
 

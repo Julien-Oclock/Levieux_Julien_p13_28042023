@@ -1,3 +1,6 @@
+import { Link } from 'react-router-dom';
+
+
 // import logo
 const logo = 'src/assets/img/argentBankLogo.png'
 
@@ -15,9 +18,9 @@ const Header = () => {
     </a>
     <div className='nav__list-item'>
       <i className="fa-solid fa-circle-user"></i>
-      <a className="nav__item" href="./sign-in.html">
+      <Link className="nav__item" to="/sign-in">
         Sign In
-      </a>
+      </Link>
     </div>
   </nav>
   )
