@@ -10,7 +10,7 @@ import FeatureCard from '../../Components/FeatureCard';
 import './styles.scss';
 
 // feature data
-import data from '../../App/data/featureData';
+import data from '../../app/data/featureData';
 
 const HomePage = () => {
     return (
