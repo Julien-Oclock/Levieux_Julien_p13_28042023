@@ -1,6 +1,3 @@
-
-//npm import
-
 import Header from '../../Components/Header';
 import Footer from '../../Components/Footer';
 import Banner from '../../Components/Banner';
@@ -13,6 +10,7 @@ import './styles.scss';
 import data from '../../app/data/featureData';
 
 const HomePage = () => {
+
     return (
         <div>
             <Header />

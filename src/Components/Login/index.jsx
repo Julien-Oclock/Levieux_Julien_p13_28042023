@@ -8,7 +8,7 @@ import { loginUser } from '../../app/Features/auth/authAction'
 import { useEffect } from 'react';
 
 const Login = () => {
-    const { loading, userInfo, error } = useSelector(state => state.auth);
+    const { loading, userToken, error } = useSelector(state => state.auth);
     const dispatch = useDispatch();
 
     const { register, handleSubmit } = useForm();
@@ -16,14 +16,16 @@ const Login = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // if (userInfo) {
-        //   navigate('/user')
-        // }
-      }, [navigate, userInfo])
+        console.log(userToken);
+        if(userToken !== null) {
+            navigate('/user');
+        }
+    }, [navigate, userToken])
     
 
     const submitForm = (data) => {
         dispatch(loginUser(data));
+
     }
 
     const content = (
@@ -63,6 +65,7 @@ const Login = () => {
                     <button type='submit' className='submit-button'>
                         {loading ? 'Loading...' : 'Sign In'}
                     </button>
+                    {error && <p className="error">{error}</p>}
                 </form>
             </section>
     );
