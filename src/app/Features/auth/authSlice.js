@@ -2,14 +2,14 @@ import { createSlice } from '@reduxjs/toolkit'
 import { registerUser, loginUser} from './authAction'
 
 // initialize userToken from local storage
-const userToken = localStorage.getItem('userToken')
-  ? localStorage.getItem('userToken')
-  : null
+// const userToken = localStorage.getItem('userToken')
+//   ? localStorage.getItem('userToken')
+//   : null
 
 const initialState = {
   loading: false, // for loading spinner
   userInfo: {}, // for user object
-  userToken, // for storing the JWT
+  userToken:null, // for storing the JWT
   error: null, // for error message
   success: false, // for monitoring the registration process.
 }
@@ -37,8 +37,8 @@ const authSlice = createSlice({
     },
     [loginUser.fulfilled]: (state, { payload }) => {
       state.loading = false
-      state.userInfo = payload.user
-      state.userToken = payload.token
+      state.userToken = payload.body.token
+      console.log(payload.body.token);
     },
     [loginUser.rejected]: (state, { payload }) => {
       state.loading = false

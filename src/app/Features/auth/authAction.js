@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createAsyncThunk} from "@reduxjs/toolkit";
 
-const backendUrl = 'http://localhost:3001'
+const backendUrl = 'http://localhost:3001/api/v1'
 
 export const registerUser = createAsyncThunk(
     'user/signup',
@@ -39,12 +39,69 @@ export const loginUser = createAsyncThunk(
             {email, password}, 
             config
             )
+            console.log(data)
             localStorage.setItem('userToken', JSON.stringify(data.userToken))
+            
             return data
         } catch (error) {
+            console.error(error)
             if (error.response) {
+                console.error(error.response.data)
                 return rejectWithValue(error.response.data.message)
             } else {
+                console.error(error.message)
+                return rejectWithValue(error.message)
+            }
+        }
+    }
+)
+
+// get user profile info with token in local storage
+export const getUserProfile = createAsyncThunk(
+    'user/profile',
+    async (_, {rejectWithValue, getState}) => {
+        try {
+            const {auth} = getState()
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${auth.userToken}`
+                },
+            }
+            const {data} = await axios.get(`${backendUrl}/user/profile`, 
+            config
+            )
+            return data
+        } catch (error) {
+            console.error(error)
+            if (error.response) {
+                console.error(error.response.data)
+                return rejectWithValue(error.response.data.message)
+            } else {
+                console.error(error.message)
+                return rejectWithValue(error.message)
+            }
+        }
+    }
+)
+
+// logut user and remove token from local storage
+export const logoutUser = createAsyncThunk(
+    'user/logout',
+    async (_, {rejectWithValue, getState }) => {
+        try {
+            localStorage.removeItem('userToken')
+            // remove user token from state
+            const {auth} = getState()
+            auth.userToken = null
+            return true
+        } catch (error) {
+            console.error(error)
+            if (error.response) {
+                console.error(error.response.data)
+                return rejectWithValue(error.response.data.message)
+            } else {
+                console.error(error.message)
                 return rejectWithValue(error.message)
             }
         }
