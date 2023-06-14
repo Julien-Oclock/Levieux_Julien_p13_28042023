@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { registerUser, loginUser} from './authAction'
 
-// initialize userToken from local storage
-// const userToken = localStorage.getItem('userToken')
-//   ? localStorage.getItem('userToken')
-//   : null
+//initialize userToken from local storage
+const userToken = localStorage.getItem('userToken')
+  ? localStorage.getItem('userToken')
+  : null
 
 const initialState = {
   loading: false, // for loading spinner
@@ -19,17 +19,17 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout : (state) => {
-      state.login = false
-      state.userInfo = null,
+      localStorage.removeItem('userToken') // deletes token from storage
+      state.loading = false
+      state.userInfo = null
       state.userToken = null
       state.error = null
     },
-    SetUserInfo: (state, { payload }) => {
+    setCredentials: (state, { payload }) => {
       state.userInfo = payload
     },
   },
   extraReducers: {
-
     // Login user
     [loginUser.pending]: (state) => {
       state.loading = true
@@ -44,6 +44,24 @@ const authSlice = createSlice({
       state.loading = false
       state.error = payload
     },
+    // logout user
+    // [logoutUser.pending]: (state) => {
+    //   state.loading = true
+    //   state.error = null
+    // },
+    // [logoutUser.fulfilled]: (state) => {
+    //   state.loading = false
+    //   localStorage.removeItem('userToken') // deletes token from storage
+    //   state.loading = false
+    //   state.userInfo = null
+    //   state.userToken = null
+    //   state.error = null
+    // },
+    // [logoutUser.rejected]: (state, { payload }) => {
+    //   state.loading = false
+    //   state.error = payload
+    // },
+  
 
     // Register user
     [registerUser.pending]: (state) => {
@@ -61,4 +79,6 @@ const authSlice = createSlice({
   },
 })
 
+
+export const { logout, setCredentials } = authSlice.actions
 export default authSlice.reducer

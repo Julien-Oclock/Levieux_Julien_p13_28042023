@@ -3,28 +3,6 @@ import { createAsyncThunk} from "@reduxjs/toolkit";
 
 const backendUrl = 'http://localhost:3001/api/v1'
 
-export const registerUser = createAsyncThunk(
-    'user/signup',
-    async ({fistname, lastname, email, password}, {rejectWithValue}) => {
-        try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            }
-            await axios.post(`${backendUrl}/user/singup`, 
-            {fistname, lastname, email, password}, 
-            config
-            )
-        } catch (error) {
-            if (error.response) {
-                return rejectWithValue(error.response.data.message)
-            } else {
-                return rejectWithValue(error.message)
-            }
-        }
-    }
-)
 
 export const loginUser = createAsyncThunk(
     'auth/login',
@@ -56,6 +34,29 @@ export const loginUser = createAsyncThunk(
     }
 )
 
+export const registerUser = createAsyncThunk(
+    'user/signup',
+    async ({fistname, lastname, email, password}, {rejectWithValue}) => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }
+            await axios.post(`${backendUrl}/user/singup`, 
+            {fistname, lastname, email, password}, 
+            config
+            )
+        } catch (error) {
+            if (error.response) {
+                return rejectWithValue(error.response.data.message)
+            } else {
+                return rejectWithValue(error.message)
+            }
+        }
+    }
+)
+
 // get user profile info with token in local storage
 export const getUserProfile = createAsyncThunk(
     'user/profile',
@@ -72,29 +73,6 @@ export const getUserProfile = createAsyncThunk(
             config
             )
             return data
-        } catch (error) {
-            console.error(error)
-            if (error.response) {
-                console.error(error.response.data)
-                return rejectWithValue(error.response.data.message)
-            } else {
-                console.error(error.message)
-                return rejectWithValue(error.message)
-            }
-        }
-    }
-)
-
-// logut user and remove token from local storage
-export const logoutUser = createAsyncThunk(
-    'user/logout',
-    async (_, {rejectWithValue, getState }) => {
-        try {
-            localStorage.removeItem('userToken')
-            // remove user token from state
-            const {auth} = getState()
-            auth.userToken = null
-            return true
         } catch (error) {
             console.error(error)
             if (error.response) {
