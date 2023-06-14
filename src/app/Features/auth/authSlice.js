@@ -37,31 +37,14 @@ const authSlice = createSlice({
     },
     [loginUser.fulfilled]: (state, { payload }) => {
       state.loading = false
+      state.succes = true
       state.userToken = payload.body.token
       console.log(payload.body.token);
     },
     [loginUser.rejected]: (state, { payload }) => {
       state.loading = false
       state.error = payload
-    },
-    // logout user
-    // [logoutUser.pending]: (state) => {
-    //   state.loading = true
-    //   state.error = null
-    // },
-    // [logoutUser.fulfilled]: (state) => {
-    //   state.loading = false
-    //   localStorage.removeItem('userToken') // deletes token from storage
-    //   state.loading = false
-    //   state.userInfo = null
-    //   state.userToken = null
-    //   state.error = null
-    // },
-    // [logoutUser.rejected]: (state, { payload }) => {
-    //   state.loading = false
-    //   state.error = payload
-    // },
-  
+    }, 
 
     // Register user
     [registerUser.pending]: (state) => {

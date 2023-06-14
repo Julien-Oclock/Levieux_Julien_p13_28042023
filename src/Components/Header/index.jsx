@@ -10,7 +10,7 @@ const logo = 'src/assets/img/argentBankLogo.png'
 import './styles.scss'
 
 const Header = () => {
-  const { userToken, userInfo} = useSelector(state => state.auth);
+  const { userToken } = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
   // logout user
