@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 const backendUrl = 'http://localhost:3001/api/v1'
 
+
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
@@ -18,10 +19,19 @@ export const authApi = createApi({
     },
   }),
   endpoints: (builder) => ({
+    // get user profile info with token in local storage
     getUserDetails: builder.query({
       query: () => ({
         url: '/user/profile',
         method: 'POST',
+      }),
+    }),
+    // update user profile info with token in local storage
+    updateUserDetails: builder.mutation({
+      query: (body) => ({ 
+        url: '/user/profile',
+        method: 'PUT',
+        body,
       }),
     }),
   }),

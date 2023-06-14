@@ -1,9 +1,7 @@
 import axios from "axios";
 import { createAsyncThunk} from "@reduxjs/toolkit";
 
-
 const backendUrl = 'http://localhost:3001/api/v1'
-
 
 export const loginUser = createAsyncThunk(
     'auth/login',
@@ -18,8 +16,8 @@ export const loginUser = createAsyncThunk(
             {email, password}, 
             config
             )
-            console.log(data)
-            localStorage.setItem('userToken', JSON.stringify(data.userToken))
+            console.log(data.body.token)
+            localStorage.setItem('userToken', JSON.stringify(data.body.token))
             
             return data
         } catch (error) {
@@ -35,54 +33,28 @@ export const loginUser = createAsyncThunk(
     }
 )
 
-export const registerUser = createAsyncThunk(
-    'user/signup',
-    async ({fistname, lastname, email, password}, {rejectWithValue}) => {
+// update user profile info with token in local storage
+export const updateUserInfo = createAsyncThunk(
+    'user/profile',
+    
+    async ({firstname, lastname}, {rejectWithValue}) => {
         try {
             const config = {
                 headers: {
                     'Content-Type': 'application/json'
                 },
             }
-            await axios.post(`${backendUrl}/user/singup`, 
-            {fistname, lastname, email, password}, 
-            config
-            )
-        } catch (error) {
-            if (error.response) {
-                return rejectWithValue(error.response.data.message)
-            } else {
-                return rejectWithValue(error.message)
-            }
-        }
-    }
-)
-
-// get user profile info with token in local storage
-export const getUserProfile = createAsyncThunk(
-    'user/profile',
-    async (_, {rejectWithValue, getState}) => {
-        try {
-            const {auth} = getState()
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${auth.userToken}`
-                },
-            }
-            const {data} = await axios.get(`${backendUrl}/user/profile`, 
+            const {data} = await axios.put(`${backendUrl}/user/profile`, 
+            {firstname, lastname}, 
             config
             )
             return data
         } catch (error) {
-            console.error(error)
             if (error.response) {
-                console.error(error.response.data)
                 return rejectWithValue(error.response.data.message)
             } else {
-                console.error(error.message)
                 return rejectWithValue(error.message)
             }
         }
-    }
+    },
 )

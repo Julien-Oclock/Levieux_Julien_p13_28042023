@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { registerUser, loginUser} from './authAction'
+import { loginUser, updateUserInfo} from './authAction'
 
 
 //initialize userToken from local storage
@@ -10,7 +10,7 @@ const userToken = localStorage.getItem('userToken')
 const initialState = {
   loading: false, // for loading spinner
   userInfo: null, // for user object
-  userToken:null, // for storing the JWT
+  userToken: userToken ? userToken : null, // for storing the JWT
   error: null, // for error message
   success: false, // for monitoring the registration process.
 }
@@ -27,10 +27,12 @@ const authSlice = createSlice({
       state.error = null
     },
     setCredentials: (state, { payload }) => {
-      state.userInfo = payload
+      state.userInfo = payload.body
     },
   },
   extraReducers: {
+
+
     // Login user
     [loginUser.pending]: (state) => {
       state.loading = true
@@ -40,23 +42,26 @@ const authSlice = createSlice({
       state.loading = false
       state.succes = true
       state.userToken = payload.body.token
-      console.log(payload.body.token);
     },
     [loginUser.rejected]: (state, { payload }) => {
       state.loading = false
       state.error = payload
-    }, 
+    },
 
-    // Register user
-    [registerUser.pending]: (state) => {
+
+    // update user profile info with token in local storage
+    [updateUserInfo.pending]: (state) => {
       state.loading = true
       state.error = null
     },
-    [registerUser.fulfilled]: (state) => {
+    [updateUserInfo.fulfilled]: (state, { payload }) => {
+      // update name and firstname in state.userInfo
       state.loading = false
-      state.success = true
+      state.succes = true
+      userInfo.firstname = payload.body.firstname ? payload.body.firstname : state.userInfo.firstname
+      userInfo.lastName = payload.body.lastName ? payload.body.name : state.userInfo.lastName
     },
-    [registerUser.rejected]: (state, { payload }) => {
+    [updateUserInfo.rejected]: (state, { payload }) => {
       state.loading = false
       state.error = payload
     }
