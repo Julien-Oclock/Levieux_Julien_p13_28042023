@@ -8,8 +8,9 @@ const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authApi.middleware),
+    // Add the authApi middleware before the default middleware
+    [authApi.middleware, ...getDefaultMiddleware()],
   devTools: true
 })
-export default store
 
+export default store

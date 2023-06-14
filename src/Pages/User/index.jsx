@@ -14,39 +14,34 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { useGetUserDetailsQuery } from '../../app/Service/authService';
 import { setCredentials } from '../../app/Features/auth/authSlice';
-
-
 import Header from '../../Components/Header';
 import Footer from '../../Components/Footer';
 import AccountCard from '../../Components/AccountCard';
-
 import './styles.scss';
 
 const User = () => {
 
     const { userToken, userInfo } = useSelector(state => state.auth);
 
-    const { data, isFetching } = useGetUserDetailsQuery('userDetails', {
-        // perform a refetch every 15mins
-          pollingInterval: 900000,
-        })
+    const { data, isFetching } = useGetUserDetailsQuery('userDetails', { 
+        token: userToken
+    });
 
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log(userToken);
         if (userToken === null) {
             navigate('/');
         }
-    }, [navigate, userToken])
+    }, [navigate, userToken]);
 
     useEffect(() => {
-        dispatch(setCredentials(data))
-        console.log(userInfo);
-      }, [data, dispatch])
-    
+        if (data) {
+            dispatch(setCredentials(data));
+        }
+    }, [data, dispatch]);
 
     return (
         <div>
@@ -55,7 +50,13 @@ const User = () => {
                 <div className="user-info">
                     <h1>
                         Welcome back <br/>
-                        {/* {isFetching ? <span>Loading...</span>  : <span> {userInfo.firstName} {userInfo.lastName}</span>}     */}
+                        {isFetching ? <span>Loading...</span> : (
+                            userInfo ? (
+                                <span>{userInfo.body.firstName} {userInfo.body.lastName}</span>
+                            ) : (
+                                <span>User Info Not Found</span>
+                            )
+                        )}
                     </h1>
                     <button className='edit'>Edit Name</button>
                 </div>
