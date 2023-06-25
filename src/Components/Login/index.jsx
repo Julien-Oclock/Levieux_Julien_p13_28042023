@@ -25,7 +25,6 @@ const Login = () => {
 
     const submitForm = (data) => {
         dispatch(loginUser(data));
-
     }
 
     const content = (
