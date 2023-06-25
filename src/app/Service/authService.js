@@ -26,15 +26,7 @@ export const authApi = createApi({
         method: 'POST',
       }),
     }),
-    // update user profile info with token in local storage
-    updateUserDetails: builder.mutation({
-      query: (body) => ({ 
-        url: '/user/profile',
-        method: 'PUT',
-        body,
-      }),
-    }),
   }),
 })
 
-export const { useGetUserDetailsQuery } = authApi
+export const { useGetUserDetailsQuery, useUpdateUserDetailsQuery} = authApi

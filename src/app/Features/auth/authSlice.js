@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { loginUser, updateUserInfo} from './authAction'
+import { loginUser, updateUserInfoAsync} from './authAction'
+import { GetCookie, SetCookie, RemoveCookie } from '../../Service/cookiesServices'
 
 
 //initialize userToken from local storage
-const userToken = localStorage.getItem('userToken')
-  ? localStorage.getItem('userToken')
+const userToken = GetCookie('userToken')
+  ? GetCookie('userToken')
   : null
 
 const initialState = {
@@ -12,7 +13,8 @@ const initialState = {
   userInfo: null, // for user object
   userToken: userToken ? userToken : null, // for storing the JWT
   error: null, // for error message
-  success: false, // for monitoring the registration process.
+  success: false, // for success
+  editForm : false // for monitoring the user update info process.
 }
 
 const authSlice = createSlice({
@@ -20,6 +22,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout : (state) => {
+      RemoveCookie('userToken') // deletes token from cookie
       localStorage.removeItem('userToken') // deletes token from storage
       state.loading = false
       state.userInfo = null
@@ -29,10 +32,11 @@ const authSlice = createSlice({
     setCredentials: (state, { payload }) => {
       state.userInfo = payload.body
     },
+    handleEditForm: (state) => {
+      state.editForm = !state.editForm
+    }
   },
   extraReducers: {
-
-
     // Login user
     [loginUser.pending]: (state) => {
       state.loading = true
@@ -42,6 +46,8 @@ const authSlice = createSlice({
       state.loading = false
       state.succes = true
       state.userToken = payload.body.token
+      SetCookie('userToken', payload.body.token)
+
     },
     [loginUser.rejected]: (state, { payload }) => {
       state.loading = false
@@ -50,24 +56,28 @@ const authSlice = createSlice({
 
 
     // update user profile info with token in local storage
-    [updateUserInfo.pending]: (state) => {
+    [updateUserInfoAsync.pending]: (state) => {
       state.loading = true
       state.error = null
     },
-    [updateUserInfo.fulfilled]: (state, { payload }) => {
+    [updateUserInfoAsync.fulfilled]: (state, { payload }) => {
       // update name and firstname in state.userInfo
       state.loading = false
       state.succes = true
-      userInfo.firstname = payload.body.firstname ? payload.body.firstname : state.userInfo.firstname
-      userInfo.lastName = payload.body.lastName ? payload.body.name : state.userInfo.lastName
+      state.editForm = false
+      console.log('Payload', payload)
+      console.log('Slice', { firstName : payload.body.firstName, lastName: payload.body.lastName })
+      state.userInfo.firstname = payload.body.firstName
+      state.userInfo.lastName = payload.body.lastName 
     },
-    [updateUserInfo.rejected]: (state, { payload }) => {
+    [updateUserInfoAsync.rejected]: (state, { payload }) => {
       state.loading = false
       state.error = payload
+
     }
   },
 })
 
 
-export const { logout, setCredentials } = authSlice.actions
+export const { logout, setCredentials, handleEditForm } = authSlice.actions
 export default authSlice.reducer
