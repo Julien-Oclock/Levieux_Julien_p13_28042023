@@ -1,6 +1,5 @@
 import axios from "axios";
 import { createAsyncThunk} from "@reduxjs/toolkit";
-import { GetCookie, SetCookie } from '../../Service/cookiesServices'
 
 
 const backendUrl = 'http://localhost:3001/api/v1'
@@ -39,7 +38,7 @@ export const updateUserInfoAsync = createAsyncThunk(
     'auth/updateUserInfo',
     async ({firstName, lastName}, { rejectWithValue}) =>{
         try {
-            const token = GetCookie('userToken')
+            const token = localStorage.getItem('userToken')
             const config = {
                 headers: {
                     'Content-Type': 'application/json',

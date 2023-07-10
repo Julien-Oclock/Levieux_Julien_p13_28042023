@@ -6,9 +6,11 @@ export function GetCookie(name) {
         let [key, value] = el.split('=');
         cookie[key.trim()] = value;
     })
-    return cookie[name.toUpperCase()] ?
-        JSON.parse(cookie[name.toUpperCase()]) :
-        null;
+    if (cookie[name.toUpperCase()]) {
+        return cookie[name.toUpperCase()] ?
+            JSON.parse(cookie[name.toUpperCase()]) :
+            null;
+    } else return
 }
 
 /**

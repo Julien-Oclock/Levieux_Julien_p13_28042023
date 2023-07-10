@@ -11,34 +11,24 @@
 
 // react imports
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
-//local redux imports
-import { useGetUserDetailsQuery } from '../../app/Service/authService';
-import { setCredentials } from '../../app/Features/auth/authSlice';
 
 // local imports
 import Header from '../../Components/Header';
 import Footer from '../../Components/Footer';
 import AccountCard from '../../Components/AccountCard';
 import EditUserForm from '../../Components/EditUserForm';
-import { handleEditForm } from '../../app/Features/auth/authSlice';
+
 
 // styles
 import './styles.scss';
 
 const User = () => {
 
-    const { userToken, userInfo, editForm } = useSelector(state => state.auth);
+    const { userToken, editForm } = useSelector(state => state.auth);
     console.log(editForm);
-
-    const { data, isFetching } = useGetUserDetailsQuery('userDetails', { 
-        token: userToken
-    });
-
-
-    const dispatch = useDispatch();
 
     const navigate = useNavigate();
 
@@ -48,15 +38,9 @@ const User = () => {
         }
     }, [navigate, userToken]);
 
-    useEffect(() => {
-        if (data) {
-            dispatch(setCredentials(data));
-        }
-    }, [data, dispatch]);
 
-    const displayEditForm = () => {
-        dispatch(handleEditForm());
-    }
+
+
 
     return (
         <div>
@@ -66,20 +50,7 @@ const User = () => {
                   <h1>
                     Welcome back
                   </h1>
-                {editForm ? <EditUserForm /> :
-                    <div>
-                        <h1>
-                            {isFetching ? <span>Loading...</span> : (
-                                userInfo ? (
-                                    <span>{data.body.firstName} {data.body.lastName}</span>
-                                ) : (
-                                    <span>User Info Not Found</span>
-                                )
-                            )}
-                        </h1>
-                        <button className='edit' onClick={displayEditForm}>Edit Name</button>
-                    </div>
-                }
+                  <EditUserForm isEditForm={editForm}/>
                 </div>
                 <div className="card-container">
                     <AccountCard />

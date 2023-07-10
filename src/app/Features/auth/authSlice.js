@@ -1,17 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { loginUser, updateUserInfoAsync} from './authAction'
-import { GetCookie, SetCookie, RemoveCookie } from '../../Service/cookiesServices'
 
+const userToken = localStorage.getItem('userToken') ? localStorage.getItem('userToken') : null
 
-//initialize userToken from local storage
-const userToken = GetCookie('userToken')
-  ? GetCookie('userToken')
-  : null
+console.log(userToken)
+
 
 const initialState = {
   loading: false, // for loading spinner
   userInfo: null, // for user object
-  userToken: userToken ? userToken : null, // for storing the JWT
+  userToken:userToken , // for storing the JWT
   error: null, // for error message
   success: false, // for success
   editForm : false // for monitoring the user update info process.
@@ -22,7 +20,6 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout : (state) => {
-      RemoveCookie('userToken') // deletes token from cookie
       localStorage.removeItem('userToken') // deletes token from storage
       state.loading = false
       state.userInfo = null
@@ -46,7 +43,7 @@ const authSlice = createSlice({
       state.loading = false
       state.succes = true
       state.userToken = payload.body.token
-      SetCookie('userToken', payload.body.token)
+      localStorage.setItem('userToken', payload.body.token)
 
     },
     [loginUser.rejected]: (state, { payload }) => {
@@ -65,10 +62,8 @@ const authSlice = createSlice({
       state.loading = false
       state.succes = true
       state.editForm = false
-      console.log('Payload', payload)
-      console.log('Slice', { firstName : payload.body.firstName, lastName: payload.body.lastName })
-      state.userInfo.firstname = payload.body.firstName
-      state.userInfo.lastName = payload.body.lastName 
+      state.userInfo.lastName = payload.body.lastName
+      state.userInfo.firstName = payload.body.firstName
     },
     [updateUserInfoAsync.rejected]: (state, { payload }) => {
       state.loading = false
