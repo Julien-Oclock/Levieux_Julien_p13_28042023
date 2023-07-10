@@ -1,11 +1,20 @@
 .user-form {
-  width: 70%;
+  width: 40%;
   margin: 0 auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  @media screen and (max-width: 1454px) {
+    width: 20%;
+  }
 
   .form-group {
     flex-shrink: 1;
+
+    input {
+      margin: 1rem;
+    }
   }
 
   .submit-button {
