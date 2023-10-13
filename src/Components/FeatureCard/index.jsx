@@ -1,3 +1,6 @@
+// import prop-types
+import PropTypes from 'prop-types';
+
 import './styles.scss'
 
 const FeatureCard = ({icon, title, description}) => {
@@ -11,4 +14,17 @@ const FeatureCard = ({icon, title, description}) => {
 };
 
 export default FeatureCard;
+
+//  use
+FeatureCard.propTypes = {
+    icon: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+};
+
+FeatureCard.defaultProps = {
+    icon: '',
+    title: '',
+    description: '',
+};
 
