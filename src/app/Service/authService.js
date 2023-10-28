@@ -29,4 +29,4 @@ export const authApi = createApi({
   }),
 })
 
-export const { useGetUserDetailsQuery, useUpdateUserDetailsQuery} = authApi
+export const { useGetUserDetailsQuery} = authApi

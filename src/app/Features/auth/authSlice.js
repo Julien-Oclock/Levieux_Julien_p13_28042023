@@ -3,9 +3,6 @@ import { loginUser, updateUserInfoAsync} from './authAction'
 
 const userToken = localStorage.getItem('userToken') ? localStorage.getItem('userToken') : null
 
-console.log(userToken)
-
-
 const initialState = {
   loading: false, // for loading spinner
   userInfo: null, // for user object
