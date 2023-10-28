@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 const backendUrl = 'http://localhost:3001/api/v1'
 
-
+// Create a service using the base url and the fetch implementation from RTK Query
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
